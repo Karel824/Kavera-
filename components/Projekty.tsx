@@ -56,7 +56,7 @@ export default function Projekty() {
             </div>
 
             {/* Sub cards */}
-            <div className="grid grid-rows-2 gap-7 max-lg:grid-rows-none max-lg:grid-cols-2">
+            <div className="grid grid-rows-2 gap-7 max-lg:grid-rows-none max-lg:grid-cols-2 max-sm:grid-cols-1">
               <div className="group relative rounded-[2px] overflow-hidden cursor-pointer min-h-[220px]">
                 <Image
                   src="/kluchova.png"
