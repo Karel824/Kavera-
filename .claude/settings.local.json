@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run *)",
+      "PowerShell(cd \"C:\\\\Projekty\\\\Landing page reality Kavera\"; Start-Process powershell -ArgumentList \"-NoExit\", \"-Command\", \"npm run dev\" -PassThru | Select-Object Id)",
+      "PowerShell(npm run *)",
+      "Bash(echo \"PID: $!\")",
+      "Bash(curl *)",
+      "Bash(gh auth *)",
+      "Bash(vercel --version)"
+    ]
+  }
+}

@@ -1,0 +1,1207 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kavera Reality — Váš stabilní základ</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --midnight:   #1A1A2E;
+      --greige:     #F4F1EB;
+      --emerald:    #2D5A4A;
+      --terracotta: #C67D53;
+      --slate:      #545454;
+      --slate-light:#8A8A8A;
+      --white:      #FFFFFF;
+      --border:     rgba(26,26,46,.10);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: var(--greige);
+      color: var(--slate);
+      font-size: 16px;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ─── TYPOGRAPHY ─── */
+    h1, h2, h3, h4 {
+      font-family: 'Playfair Display', serif;
+      color: var(--midnight);
+      line-height: 1.2;
+    }
+    h1 { font-size: clamp(2.4rem, 5vw, 4.2rem); font-weight: 500; }
+    h2 { font-size: clamp(1.9rem, 3.5vw, 3rem);  font-weight: 500; }
+    h3 { font-size: clamp(1.3rem, 2vw, 1.7rem);  font-weight: 500; }
+    h4 { font-size: 1.1rem; font-weight: 500; }
+    p  { color: var(--slate); }
+
+    .label {
+      font-family: 'Montserrat', sans-serif;
+      font-size: .72rem;
+      font-weight: 600;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--terracotta);
+    }
+
+    /* ─── LAYOUT ─── */
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 32px; }
+
+    section { padding: 96px 0; }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: 0 40px;
+      height: 72px;
+      display: flex; align-items: center; justify-content: space-between;
+      background: rgba(244,241,235,.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      transition: box-shadow .3s;
+    }
+    nav.scrolled { box-shadow: 0 2px 24px rgba(26,26,46,.08); }
+
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.35rem;
+      font-weight: 600;
+      color: var(--midnight);
+      text-decoration: none;
+      letter-spacing: .02em;
+    }
+    .nav-logo span { color: var(--terracotta); }
+
+    .nav-links { display: flex; align-items: center; gap: 36px; list-style: none; }
+    .nav-links a {
+      font-size: .82rem;
+      font-weight: 500;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      color: var(--slate);
+      text-decoration: none;
+      transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--midnight); }
+
+    .nav-cta {
+      background: var(--midnight);
+      color: var(--white) !important;
+      padding: 10px 22px;
+      border-radius: 2px;
+    }
+    .nav-cta:hover { background: var(--terracotta) !important; color: var(--white) !important; }
+
+    .nav-hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+    .nav-hamburger span { width: 24px; height: 2px; background: var(--midnight); transition: .3s; }
+
+    /* ─── HERO ─── */
+    #hero {
+      position: relative;
+      height: 100vh; min-height: 640px;
+      display: flex; align-items: flex-end;
+      padding-bottom: 80px;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute; inset: 0;
+      background-image: url('hf_20260501_225354_c85522ff-fb66-4054-8457-6489a7c919dd.png');
+      background-size: cover;
+      background-position: center 30%;
+      transform: scale(1.04);
+      transition: transform 8s ease-out;
+    }
+    .hero-bg.loaded { transform: scale(1); }
+
+    .hero-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(
+        to top,
+        rgba(26,26,46,.82) 0%,
+        rgba(26,26,46,.40) 50%,
+        rgba(26,26,46,.10) 100%
+      );
+    }
+
+    .hero-content {
+      position: relative; z-index: 2;
+      max-width: 820px;
+    }
+    .hero-content .label { color: rgba(244,241,235,.7); margin-bottom: 20px; }
+    .hero-content h1 {
+      color: var(--white);
+      font-style: italic;
+      margin-bottom: 24px;
+    }
+    .hero-content h1 em { font-style: normal; color: var(--terracotta); }
+    .hero-content p {
+      color: rgba(244,241,235,.85);
+      font-size: 1.05rem;
+      max-width: 560px;
+      margin-bottom: 44px;
+      font-weight: 300;
+    }
+
+    .hero-btns { display: flex; gap: 16px; flex-wrap: wrap; }
+
+    /* ─── BUTTONS ─── */
+    .btn {
+      display: inline-block;
+      font-family: 'Montserrat', sans-serif;
+      font-size: .78rem;
+      font-weight: 600;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      padding: 15px 32px;
+      text-decoration: none;
+      border-radius: 2px;
+      transition: all .25s;
+      cursor: pointer;
+      border: none;
+    }
+    .btn-primary {
+      background: var(--terracotta);
+      color: var(--white);
+    }
+    .btn-primary:hover { background: #b36a40; transform: translateY(-1px); }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--white);
+      border: 1.5px solid rgba(255,255,255,.6);
+    }
+    .btn-outline:hover { border-color: var(--white); background: rgba(255,255,255,.1); }
+
+    .btn-dark {
+      background: var(--midnight);
+      color: var(--white);
+    }
+    .btn-dark:hover { background: var(--emerald); transform: translateY(-1px); }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--midnight);
+      border: 1.5px solid var(--border);
+    }
+    .btn-ghost:hover { border-color: var(--midnight); }
+
+    /* ─── SCROLL INDICATOR ─── */
+    .hero-scroll {
+      position: absolute; bottom: 32px; right: 48px; z-index: 2;
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+      color: rgba(255,255,255,.5);
+      font-size: .68rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+    .scroll-line {
+      width: 1px; height: 48px;
+      background: linear-gradient(to bottom, transparent, rgba(255,255,255,.5));
+      animation: scrollDown 2s ease-in-out infinite;
+    }
+    @keyframes scrollDown {
+      0%,100% { transform: scaleY(1); opacity: .5; }
+      50% { transform: scaleY(.6); opacity: 1; }
+    }
+
+    /* ─── SPLIT CTA CARDS ─── */
+    #rozcestnik {
+      padding: 0;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+    .split-card {
+      padding: 72px 64px;
+      display: flex; flex-direction: column; gap: 20px;
+    }
+    .split-card:first-child { background: var(--midnight); }
+    .split-card:last-child  { background: var(--emerald);  }
+
+    .split-card .label { color: rgba(244,241,235,.55); }
+    .split-card h3 { color: var(--white); font-size: clamp(1.5rem, 2.5vw, 2.2rem); }
+    .split-card p  { color: rgba(244,241,235,.75); font-weight: 300; font-size: .95rem; }
+
+    .split-card .split-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 4.5rem;
+      color: rgba(255,255,255,.10);
+      line-height: 1;
+      margin-bottom: -8px;
+    }
+
+    /* ─── O NÁS ─── */
+    #o-nas { background: var(--white); }
+
+    .o-nas-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .o-nas-img {
+      position: relative;
+      aspect-ratio: 4/5;
+      overflow: hidden;
+      border-radius: 2px;
+    }
+    .o-nas-img img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform .6s ease;
+    }
+    .o-nas-img:hover img { transform: scale(1.03); }
+
+    .o-nas-img::after {
+      content: '';
+      position: absolute; bottom: -20px; right: -20px;
+      width: 200px; height: 200px;
+      border: 1.5px solid var(--terracotta);
+      z-index: -1;
+      border-radius: 2px;
+    }
+
+    .o-nas-text { display: flex; flex-direction: column; gap: 28px; }
+    .o-nas-text .label { margin-bottom: -8px; }
+    .o-nas-text p { font-size: .96rem; line-height: 1.8; }
+
+    .values-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-top: 8px;
+    }
+    .value-item {
+      padding: 20px 24px;
+      border-left: 3px solid var(--terracotta);
+      background: var(--greige);
+    }
+    .value-item h4 { font-family: 'Montserrat', sans-serif; font-size: .82rem; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; margin-bottom: 6px; color: var(--midnight); }
+    .value-item p  { font-size: .85rem; line-height: 1.6; }
+
+    /* ─── NÁJEMNÍ BYTY ─── */
+    #najemni-byty { background: var(--greige); }
+
+    .section-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 56px;
+      gap: 32px;
+    }
+    .section-header-text { display: flex; flex-direction: column; gap: 12px; }
+    .section-header-text p { max-width: 480px; font-size: .95rem; }
+
+    .property-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+    }
+
+    .property-card {
+      background: var(--white);
+      border-radius: 2px;
+      overflow: hidden;
+      transition: box-shadow .3s, transform .3s;
+    }
+    .property-card:hover {
+      box-shadow: 0 16px 48px rgba(26,26,46,.12);
+      transform: translateY(-4px);
+    }
+
+    .property-img {
+      position: relative;
+      aspect-ratio: 16/10;
+      overflow: hidden;
+    }
+    .property-img img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform .5s ease;
+    }
+    .property-card:hover .property-img img { transform: scale(1.05); }
+
+    .property-tag {
+      position: absolute; top: 16px; left: 16px;
+      background: var(--emerald);
+      color: var(--white);
+      font-size: .68rem;
+      font-weight: 600;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      padding: 5px 12px;
+      border-radius: 1px;
+    }
+    .property-tag.new { background: var(--terracotta); }
+
+    .property-body { padding: 24px 28px 28px; }
+    .property-location {
+      font-size: .75rem;
+      font-weight: 600;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--slate-light);
+      margin-bottom: 6px;
+    }
+    .property-body h4 { font-family: 'Playfair Display', serif; font-size: 1.25rem; margin-bottom: 12px; }
+    .property-meta {
+      display: flex; gap: 20px;
+      font-size: .8rem;
+      color: var(--slate-light);
+      margin-bottom: 20px;
+    }
+    .property-meta span { display: flex; align-items: center; gap: 5px; }
+
+    .property-footer {
+      display: flex; align-items: center; justify-content: space-between;
+      border-top: 1px solid var(--border);
+      padding-top: 18px;
+    }
+    .property-price {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.45rem;
+      color: var(--midnight);
+      font-weight: 500;
+    }
+    .property-price small {
+      font-family: 'Montserrat', sans-serif;
+      font-size: .72rem;
+      color: var(--slate-light);
+      font-weight: 400;
+    }
+    .property-link {
+      font-size: .72rem;
+      font-weight: 600;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--terracotta);
+      text-decoration: none;
+      transition: color .2s;
+    }
+    .property-link:hover { color: var(--midnight); }
+
+    /* ─── PROJEKTY ─── */
+    #projekty { background: var(--midnight); overflow: hidden; }
+    #projekty .label { color: rgba(244,241,235,.5); }
+    #projekty h2 { color: var(--white); }
+    #projekty .section-header p { color: rgba(244,241,235,.7); }
+    #projekty .section-header .btn { flex-shrink: 0; }
+
+    .project-showcase {
+      display: grid;
+      grid-template-columns: 1.3fr 1fr;
+      gap: 28px;
+    }
+
+    .project-card {
+      position: relative;
+      border-radius: 2px;
+      overflow: hidden;
+      cursor: pointer;
+    }
+    .project-card img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform .6s ease;
+    }
+    .project-card:hover img { transform: scale(1.05); }
+
+    .project-card-main { aspect-ratio: 4/3; }
+    .project-card-sub { display: grid; grid-template-rows: 1fr 1fr; gap: 28px; }
+    .project-card-sub .project-card { aspect-ratio: auto; }
+
+    .project-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(26,26,46,.85) 0%, transparent 55%);
+      display: flex; flex-direction: column; justify-content: flex-end;
+      padding: 32px;
+      transition: background .3s;
+    }
+    .project-card:hover .project-overlay { background: linear-gradient(to top, rgba(26,26,46,.92) 0%, rgba(26,26,46,.3) 100%); }
+
+    .project-overlay .label { color: var(--terracotta); margin-bottom: 6px; }
+    .project-overlay h3 { color: var(--white); font-size: 1.5rem; margin-bottom: 8px; }
+    .project-overlay p {
+      color: rgba(244,241,235,.75);
+      font-size: .85rem;
+      max-height: 0; overflow: hidden;
+      transition: max-height .3s ease, opacity .3s;
+      opacity: 0;
+    }
+    .project-card:hover .project-overlay p { max-height: 80px; opacity: 1; }
+
+    .project-overlay .project-status {
+      display: inline-block;
+      margin-top: 12px;
+      font-size: .68rem;
+      font-weight: 600;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--terracotta);
+      border: 1px solid var(--terracotta);
+      padding: 4px 10px;
+      border-radius: 1px;
+    }
+
+    /* ─── STATS ─── */
+    #statistiky {
+      background: var(--terracotta);
+      padding: 72px 0;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+    }
+
+    .stat-item {
+      text-align: center;
+      padding: 32px 24px;
+      border-right: 1px solid rgba(255,255,255,.25);
+    }
+    .stat-item:last-child { border-right: none; }
+
+    .stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.5rem, 4vw, 3.8rem);
+      color: var(--white);
+      font-weight: 500;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .stat-label {
+      font-size: .78rem;
+      font-weight: 500;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.75);
+    }
+
+    /* ─── REFERENCE ─── */
+    #reference { background: var(--white); }
+
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+      margin-top: 56px;
+    }
+
+    .testimonial-card {
+      padding: 36px 32px;
+      background: var(--greige);
+      border-radius: 2px;
+      display: flex; flex-direction: column; gap: 20px;
+      position: relative;
+    }
+
+    .testimonial-quote {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem;
+      color: var(--terracotta);
+      line-height: 1;
+      opacity: .4;
+    }
+
+    .testimonial-text {
+      font-size: .92rem;
+      line-height: 1.8;
+      font-style: italic;
+      color: var(--slate);
+    }
+
+    .testimonial-author {
+      margin-top: auto;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+    }
+    .testimonial-author strong {
+      display: block;
+      font-size: .85rem;
+      font-weight: 600;
+      color: var(--midnight);
+    }
+    .testimonial-author span {
+      font-size: .78rem;
+      color: var(--slate-light);
+    }
+    .stars { color: var(--terracotta); font-size: .85rem; letter-spacing: 2px; }
+
+    /* ─── KONTAKT ─── */
+    #kontakt { background: var(--greige); }
+
+    .kontakt-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 80px;
+      align-items: start;
+    }
+
+    .kontakt-info { display: flex; flex-direction: column; gap: 32px; }
+    .kontakt-info p { font-size: .96rem; line-height: 1.8; }
+
+    .kontakt-detail {
+      display: flex; flex-direction: column; gap: 16px;
+    }
+    .kontakt-row {
+      display: flex; gap: 16px; align-items: flex-start;
+    }
+    .kontakt-icon {
+      width: 40px; height: 40px;
+      background: var(--midnight);
+      border-radius: 2px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .kontakt-icon svg { width: 18px; height: 18px; fill: var(--white); }
+    .kontakt-row-text small { font-size: .72rem; letter-spacing: .06em; text-transform: uppercase; color: var(--slate-light); }
+    .kontakt-row-text strong { display: block; font-size: .96rem; color: var(--midnight); }
+
+    /* Form */
+    .contact-form { display: flex; flex-direction: column; gap: 16px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+    .form-group { display: flex; flex-direction: column; gap: 6px; }
+    .form-group label {
+      font-size: .72rem;
+      font-weight: 600;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--slate);
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      font-family: 'Montserrat', sans-serif;
+      font-size: .9rem;
+      padding: 13px 16px;
+      background: var(--white);
+      border: 1.5px solid var(--border);
+      border-radius: 2px;
+      color: var(--midnight);
+      transition: border-color .2s;
+      outline: none;
+      width: 100%;
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus { border-color: var(--midnight); }
+    .form-group textarea { resize: vertical; min-height: 120px; }
+    .form-group select { appearance: none; cursor: pointer; }
+
+    .form-note { font-size: .78rem; color: var(--slate-light); }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--midnight);
+      color: rgba(244,241,235,.6);
+      padding: 64px 0 32px;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.8fr 1fr 1fr 1fr;
+      gap: 48px;
+      padding-bottom: 48px;
+      border-bottom: 1px solid rgba(244,241,235,.1);
+    }
+
+    .footer-brand { display: flex; flex-direction: column; gap: 16px; }
+    .footer-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: var(--white);
+    }
+    .footer-logo span { color: var(--terracotta); }
+    .footer-brand p { font-size: .85rem; line-height: 1.7; max-width: 280px; }
+    .footer-claim {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: .95rem;
+      color: rgba(244,241,235,.4);
+    }
+
+    .footer-col h5 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: .72rem;
+      font-weight: 600;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--white);
+      margin-bottom: 18px;
+    }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .footer-col a {
+      font-size: .85rem;
+      color: rgba(244,241,235,.55);
+      text-decoration: none;
+      transition: color .2s;
+    }
+    .footer-col a:hover { color: var(--white); }
+
+    .footer-bottom {
+      padding-top: 28px;
+      display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;
+      font-size: .78rem;
+    }
+    .footer-bottom a { color: rgba(244,241,235,.4); text-decoration: none; }
+    .footer-bottom a:hover { color: var(--white); }
+
+    /* ─── SCROLL ANIMATIONS ─── */
+    [data-reveal] {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity .7s ease, transform .7s ease;
+    }
+    [data-reveal].visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    [data-reveal="right"] { transform: translateX(28px); }
+    [data-reveal="right"].visible { transform: translateX(0); }
+    [data-reveal="left"]  { transform: translateX(-28px); }
+    [data-reveal="left"].visible  { transform: translateX(0); }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 1024px) {
+      .property-grid { grid-template-columns: 1fr 1fr; }
+      .project-showcase { grid-template-columns: 1fr; }
+      .project-card-sub { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+      .project-card-main { aspect-ratio: 16/9; }
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+      .stat-item { border-right: 1px solid rgba(255,255,255,.25); border-bottom: 1px solid rgba(255,255,255,.25); }
+      .stat-item:nth-child(2) { border-right: none; }
+      .stat-item:nth-child(4) { border-right: none; border-bottom: none; }
+      .stat-item:nth-child(3) { border-bottom: none; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 768px) {
+      section { padding: 64px 0; }
+      .container { padding: 0 20px; }
+      nav { padding: 0 20px; }
+
+      .nav-links { display: none; }
+      .nav-hamburger { display: flex; }
+
+      .o-nas-grid,
+      .kontakt-grid { grid-template-columns: 1fr; gap: 48px; }
+      .o-nas-img::after { display: none; }
+      .o-nas-img { aspect-ratio: 16/9; }
+
+      #rozcestnik { grid-template-columns: 1fr; }
+      .split-card { padding: 48px 32px; }
+
+      .property-grid { grid-template-columns: 1fr; }
+      .project-card-sub { grid-template-columns: 1fr; }
+
+      .testimonials-grid { grid-template-columns: 1fr; }
+      .section-header { flex-direction: column; align-items: flex-start; }
+      .form-row { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+      .footer-bottom { flex-direction: column; align-items: flex-start; }
+      .values-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══ NAVIGACE ═══ -->
+<nav id="navbar">
+  <a href="#" class="nav-logo">KAVERA<span>.</span></a>
+  <ul class="nav-links">
+    <li><a href="#o-nas">O nás</a></li>
+    <li><a href="#najemni-byty">Pronájem</a></li>
+    <li><a href="#projekty">Projekty</a></li>
+    <li><a href="#reference">Reference</a></li>
+    <li><a href="#kontakt" class="nav-cta">Kontakt</a></li>
+  </ul>
+  <div class="nav-hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+
+<!-- ═══ HERO ═══ -->
+<section id="hero">
+  <div class="hero-bg" id="heroBg"></div>
+  <div class="hero-overlay"></div>
+  <div class="container hero-content">
+    <p class="label">Kavera Reality · Brno · 2026</p>
+    <h1>Architektura<br>vašeho <em>života.</em></h1>
+    <p>Od prvního kvalitního nájmu po prémiový rodinný domov. Přinášíme evropský standard nemovitostí do Brna.</p>
+    <div class="hero-btns">
+      <a href="#najemni-byty" class="btn btn-primary">Prohlédnout nájemní byty</a>
+      <a href="#projekty"     class="btn btn-outline">Developerské projekty</a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+
+<!-- ═══ ROZCESTNÍK ═══ -->
+<div id="rozcestnik">
+  <div class="split-card">
+    <div class="split-num">01</div>
+    <p class="label">Nájemní bydlení</p>
+    <h3>Moderní byty k pronájmu v Brně</h3>
+    <p>Pečlivě spravované nájemní portfolio. Žádné skryté poplatky, okamžitý servis, transparentní smlouvy.</p>
+    <a href="#najemni-byty" class="btn btn-primary" style="align-self:flex-start; margin-top:8px;">Zobrazit byty</a>
+  </div>
+  <div class="split-card">
+    <div class="split-num">02</div>
+    <p class="label">Developerské projekty</p>
+    <h3>Prémiové novostavby v architektonickém standardu</h3>
+    <p>Exkluzivní projekty Lipová a Kluchova. Architekturu, která přetrvává.</p>
+    <a href="#projekty" class="btn btn-outline" style="align-self:flex-start; margin-top:8px;">Prozkoumat projekty</a>
+  </div>
+</div>
+
+
+<!-- ═══ O NÁS ═══ -->
+<section id="o-nas">
+  <div class="container">
+    <div class="o-nas-grid">
+      <div class="o-nas-img" data-reveal="left">
+        <img src="hf_20260429_221421_f1beea6b-f496-420b-8906-691590775326.png" alt="Realizovaný projekt Kavera Reality" loading="lazy" />
+      </div>
+      <div class="o-nas-text" data-reveal="right">
+        <p class="label">O společnosti</p>
+        <h2>Stabilní brněnská<br>rodinná firma.</h2>
+        <p>Jsme Kavera Reality — moderní brněnská společnost s pevnými lokálními kořeny a jasnou vizí budoucnosti. Zakládáme si na absolutní transparentnosti, dlouhodobých partnerských vztazích a kultuře bydlení, která trvale převyšuje lokální tržní standardy.</p>
+        <p>Jako tvůrci, majitelé a správci budov v jedné osobě se staráme o nemovitosti i nájemníky s péčí řádného hospodáře. Nejsme rychlí překupníci.</p>
+        <div class="values-grid">
+          <div class="value-item">
+            <h4>Transparentnost</h4>
+            <p>Přímé ceny, jasné smlouvy, žádné skryté poplatky.</p>
+          </div>
+          <div class="value-item">
+            <h4>Evropský standard</h4>
+            <p>Prémiový design dostupný širšímu spektru profesionálů.</p>
+          </div>
+          <div class="value-item">
+            <h4>Dlouhodobá stabilita</h4>
+            <p>Nemovitosti spravujeme s péčí řádného hospodáře.</p>
+          </div>
+          <div class="value-item">
+            <h4>Celoživotní partnerství</h4>
+            <p>Od pronájmu po vlastní prémiový domov.</p>
+          </div>
+        </div>
+        <a href="#kontakt" class="btn btn-dark" style="align-self:flex-start; margin-top:8px;">Seznámit se s naší vizí</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══ NÁJEMNÍ BYTY ═══ -->
+<section id="najemni-byty">
+  <div class="container">
+    <div class="section-header" data-reveal>
+      <div class="section-header-text">
+        <p class="label">Nájemní portfolio</p>
+        <h2>Aktuální nabídka bytů</h2>
+        <p>Výběr z pečlivě spravovaného portfolia. Každý byt osobně připraven na váš příchod.</p>
+      </div>
+      <a href="#kontakt" class="btn btn-ghost">Zobrazit vše</a>
+    </div>
+
+    <div class="property-grid">
+
+      <div class="property-card" data-reveal>
+        <div class="property-img">
+          <img src="hf_20260501_225344_1ddaf51d-cf0f-4c71-81e9-6ada3fad1d78.png" alt="Byt 3+kk, Veveří" loading="lazy" />
+          <span class="property-tag new">Nový</span>
+        </div>
+        <div class="property-body">
+          <p class="property-location">Brno — Veveří</p>
+          <h4>Byt 3+kk se světlým obývacím pokojem</h4>
+          <div class="property-meta">
+            <span>↔ 82 m²</span>
+            <span>↑ 3. patro</span>
+            <span>⬤ Volný ihned</span>
+          </div>
+          <div class="property-footer">
+            <div class="property-price">22 500 Kč<br><small>/ měsíc vč. energií</small></div>
+            <a href="#kontakt" class="property-link">Prohlídka →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="property-card" data-reveal>
+        <div class="property-img">
+          <img src="hf_20260501_225412_6d5d9339-8f78-4f1b-93eb-425fe73b4616.png" alt="Byt 2+kk, Královo Pole" loading="lazy" />
+          <span class="property-tag">K dispozici</span>
+        </div>
+        <div class="property-body">
+          <p class="property-location">Brno — Královo Pole</p>
+          <h4>Byt 2+kk s designovou kuchyní</h4>
+          <div class="property-meta">
+            <span>↔ 58 m²</span>
+            <span>↑ 2. patro</span>
+            <span>⬤ Volný od 1. 6.</span>
+          </div>
+          <div class="property-footer">
+            <div class="property-price">17 200 Kč<br><small>/ měsíc vč. energií</small></div>
+            <a href="#kontakt" class="property-link">Prohlídka →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="property-card" data-reveal>
+        <div class="property-img">
+          <img src="hf_20260501_225344_1ddaf51d-cf0f-4c71-81e9-6ada3fad1d78.png" alt="Byt 1+kk, Centrum" loading="lazy" style="object-position: right center;" />
+          <span class="property-tag">K dispozici</span>
+        </div>
+        <div class="property-body">
+          <p class="property-location">Brno — Centrum</p>
+          <h4>Byt 1+kk, plně zařízený</h4>
+          <div class="property-meta">
+            <span>↔ 38 m²</span>
+            <span>↑ 4. patro</span>
+            <span>⬤ Volný ihned</span>
+          </div>
+          <div class="property-footer">
+            <div class="property-price">13 900 Kč<br><small>/ měsíc vč. energií</small></div>
+            <a href="#kontakt" class="property-link">Prohlídka →</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══ DEVELOPERSKÉ PROJEKTY ═══ -->
+<section id="projekty">
+  <div class="container">
+    <div class="section-header" data-reveal>
+      <div class="section-header-text">
+        <p class="label">Developerské projekty</p>
+        <h2>Architektura,<br>která přetrvává.</h2>
+        <p>Prémiové novostavby v Brně. Každý projekt navrhujeme, stavíme a spravujeme sami.</p>
+      </div>
+      <a href="#kontakt" class="btn btn-outline">Stáhnout ceník</a>
+    </div>
+
+    <div class="project-showcase" data-reveal>
+      <div class="project-card project-card-main">
+        <img src="hf_20260429_221421_f1beea6b-f496-420b-8906-691590775326.png" alt="Projekt Lipová — Pisárky" loading="lazy" />
+        <div class="project-overlay">
+          <p class="label">Prémiový projekt</p>
+          <h3>Rezidence Lipová</h3>
+          <p>Exkluzivní vila v Pisárkách. Architektonicky výjimečný projekt s privátní zahradou a prémiovými materiály.</p>
+          <span class="project-status">Ve výstavbě · 2026</span>
+        </div>
+      </div>
+
+      <div class="project-card-sub">
+        <div class="project-card">
+          <img src="hf_20260501_225354_c85522ff-fb66-4054-8457-6489a7c919dd.png" alt="Projekt Kluchova — Nový Lískovec" loading="lazy" />
+          <div class="project-overlay">
+            <p class="label">Nový Lískovec</p>
+            <h3>Kluchova Residence</h3>
+            <p>Na hranici lesa. Moderní standard s výhledem na přírodu.</p>
+            <span class="project-status">Předprodej otevřen</span>
+          </div>
+        </div>
+        <div class="project-card" style="background: #252540;">
+          <div class="project-overlay" style="inset:0; background:none; justify-content:center; padding:40px 32px;">
+            <p class="label" style="text-align:center; margin-bottom:16px;">Připravujeme</p>
+            <h3 style="text-align:center; font-size:1.3rem;">Projekt Prostějov</h3>
+            <p style="text-align:center; max-height:none; opacity:1; margin:12px 0 20px;">Nová bytová výstavba. Exkluzivní přístup pro registrované zájemce.</p>
+            <a href="#kontakt" class="btn btn-primary" style="align-self:center; font-size:.72rem; padding:12px 24px;">Registrovat zájem</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══ STATISTIKY ═══ -->
+<section id="statistiky">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat-item" data-reveal>
+        <div class="stat-num" data-count="40">0</div>
+        <div class="stat-label">Bytů v portfoliu</div>
+      </div>
+      <div class="stat-item" data-reveal>
+        <div class="stat-num" data-count="13" data-suffix=" mil.">0</div>
+        <div class="stat-label">Hodnota jednotky Lipová (Kč)</div>
+      </div>
+      <div class="stat-item" data-reveal>
+        <div class="stat-num" data-count="98" data-suffix="%">0</div>
+        <div class="stat-label">Obsazenost portfolia</div>
+      </div>
+      <div class="stat-item" data-reveal>
+        <div class="stat-num" data-count="2030">0</div>
+        <div class="stat-label">Vize — lídr Jižní Moravy</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══ REFERENCE ═══ -->
+<section id="reference">
+  <div class="container">
+    <div style="text-align:center; max-width:540px; margin:0 auto 0;" data-reveal>
+      <p class="label">Reference</p>
+      <h2>Co říkají<br>naši klienti</h2>
+    </div>
+    <div class="testimonials-grid">
+
+      <div class="testimonial-card" data-reveal>
+        <div class="testimonial-quote">"</div>
+        <p class="testimonial-text">S Kavera Reality jsem uzavřel nájemní smlouvu bez jediného zbytečného papírování. Vše online, transparentně, vybavení bytu přesně odpovídalo fotografiím. Konečně pronajímatel, který respektuje nájemníka.</p>
+        <div class="testimonial-author">
+          <div class="stars">★★★★★</div>
+          <strong>Martin K.</strong>
+          <span>IT specialista · Byt 2+kk, Veveří</span>
+        </div>
+      </div>
+
+      <div class="testimonial-card" data-reveal>
+        <div class="testimonial-quote">"</div>
+        <p class="testimonial-text">Investiční byt v projektu Kluchova jsme vybrali právě díky profesionalitě Kavery. Architektonická kvalita, férová komunikace o postupu výstavby a transparentní smluvní podmínky. Přesně to, co jsme hledali.</p>
+        <div class="testimonial-author">
+          <div class="stars">★★★★★</div>
+          <strong>Ing. Petra M.</strong>
+          <span>Podnikatelka · Projekt Kluchova</span>
+        </div>
+      </div>
+
+      <div class="testimonial-card" data-reveal>
+        <div class="testimonial-quote">"</div>
+        <p class="testimonial-text">Bydlíme v kavera bytě tři roky a každá oprava proběhla do 48 hodin. Nikdy jsme se necítili jako číslo — vždy jako lidé. Kvalita správy je výrazně nad průměrem brněnského trhu.</p>
+        <div class="testimonial-author">
+          <div class="stars">★★★★★</div>
+          <strong>Lucie a Tomáš V.</strong>
+          <span>Rodina · Byt 3+kk, Královo Pole</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══ KONTAKT ═══ -->
+<section id="kontakt">
+  <div class="container">
+    <div class="kontakt-grid">
+      <div class="kontakt-info" data-reveal="left">
+        <div>
+          <p class="label">Kontakt</p>
+          <h2>Jsme tu<br>pro vás.</h2>
+        </div>
+        <p>Ať už hledáte nájemní byt, nebo zvažujete investici do developerského projektu — napište nebo zavolejte. Odpovídáme zpravidla do 2 hodin.</p>
+        <div class="kontakt-detail">
+          <div class="kontakt-row">
+            <div class="kontakt-icon">
+              <svg viewBox="0 0 24 24"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg>
+            </div>
+            <div class="kontakt-row-text">
+              <small>Telefon</small>
+              <strong>+420 777 000 123</strong>
+            </div>
+          </div>
+          <div class="kontakt-row">
+            <div class="kontakt-icon">
+              <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+            </div>
+            <div class="kontakt-row-text">
+              <small>E-mail</small>
+              <strong>info@kavera.cz</strong>
+            </div>
+          </div>
+          <div class="kontakt-row">
+            <div class="kontakt-icon">
+              <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+            </div>
+            <div class="kontakt-row-text">
+              <small>Sídlo</small>
+              <strong>Náměstí Svobody 22, Brno</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <form class="contact-form" data-reveal="right" onsubmit="handleSubmit(event)">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="jmeno">Jméno a příjmení</label>
+            <input type="text" id="jmeno" placeholder="Jan Novák" required />
+          </div>
+          <div class="form-group">
+            <label for="email">E-mailová adresa</label>
+            <input type="email" id="email" placeholder="jan@novak.cz" required />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="telefon">Telefon (volitelné)</label>
+          <input type="tel" id="telefon" placeholder="+420 7XX XXX XXX" />
+        </div>
+        <div class="form-group">
+          <label for="zajem">Mám zájem o</label>
+          <select id="zajem">
+            <option value="">— Vyberte kategorii —</option>
+            <option>Nájemní byt</option>
+            <option>Projekt Lipová (Pisárky)</option>
+            <option>Projekt Kluchova (Nový Lískovec)</option>
+            <option>Projekt Prostějov</option>
+            <option>Investiční možnosti</option>
+            <option>Jiné</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="zprava">Zpráva</label>
+          <textarea id="zprava" placeholder="Napište nám, co hledáte nebo se na cokoliv zeptejte..."></textarea>
+        </div>
+        <p class="form-note">Odesláním formuláře souhlasíte se zpracováním osobních údajů. Neposíláme spam.</p>
+        <button type="submit" class="btn btn-primary" style="align-self:flex-start;">Odeslat nezávaznou poptávku</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="footer-logo">KAVERA<span>.</span></div>
+        <p>Stabilní brněnská rodinná realitní a developerská společnost. Přinášíme evropský standard nemovitostí do Brna.</p>
+        <div class="footer-claim">„Váš stabilní základ."</div>
+      </div>
+      <div class="footer-col">
+        <h5>Navigace</h5>
+        <ul>
+          <li><a href="#o-nas">O nás</a></li>
+          <li><a href="#najemni-byty">Nabídka bytů</a></li>
+          <li><a href="#projekty">Developerské projekty</a></li>
+          <li><a href="#reference">Reference</a></li>
+          <li><a href="#kontakt">Kontakt</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Projekty</h5>
+        <ul>
+          <li><a href="#projekty">Rezidence Lipová</a></li>
+          <li><a href="#projekty">Kluchova Residence</a></li>
+          <li><a href="#projekty">Projekt Prostějov</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Kontakt</h5>
+        <ul>
+          <li><a href="tel:+420777000123">+420 777 000 123</a></li>
+          <li><a href="mailto:info@kavera.cz">info@kavera.cz</a></li>
+          <li><a href="#kontakt">Náměstí Svobody 22<br>Brno 602 00</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Kavera Reality s.r.o. — Všechna práva vyhrazena</span>
+      <div style="display:flex; gap:24px;">
+        <a href="#">Ochrana osobních údajů</a>
+        <a href="#">Obchodní podmínky</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+<script>
+  // Nav scroll effect
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 40);
+  });
+
+  // Hero image parallax load
+  const heroBg = document.getElementById('heroBg');
+  requestAnimationFrame(() => heroBg.classList.add('loaded'));
+
+  // Scroll reveal
+  const revealEls = document.querySelectorAll('[data-reveal]');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 100);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  revealEls.forEach(el => observer.observe(el));
+
+  // Counter animation
+  const counterEls = document.querySelectorAll('[data-count]');
+  const counterObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      const el = entry.target;
+      const target = +el.dataset.count;
+      const suffix = el.dataset.suffix || '';
+      const duration = 1800;
+      const start = performance.now();
+      const animate = (now) => {
+        const progress = Math.min((now - start) / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        el.textContent = Math.round(eased * target) + suffix;
+        if (progress < 1) requestAnimationFrame(animate);
+      };
+      requestAnimationFrame(animate);
+      counterObserver.unobserve(el);
+    });
+  }, { threshold: 0.5 });
+  counterEls.forEach(el => counterObserver.observe(el));
+
+  // Form submit
+  function handleSubmit(e) {
+    e.preventDefault();
+    const btn = e.target.querySelector('button[type=submit]');
+    btn.textContent = 'Odesláno ✓';
+    btn.style.background = 'var(--emerald)';
+    btn.disabled = true;
+    setTimeout(() => {
+      btn.textContent = 'Odeslat nezávaznou poptávku';
+      btn.style.background = '';
+      btn.disabled = false;
+      e.target.reset();
+    }, 3500);
+  }
+
+  // Hamburger
+  document.getElementById('hamburger').addEventListener('click', () => {
+    const links = document.querySelector('.nav-links');
+    const isOpen = links.style.display === 'flex';
+    links.style.cssText = isOpen
+      ? ''
+      : 'display:flex;flex-direction:column;position:fixed;top:72px;left:0;right:0;background:var(--greige);padding:24px 20px;gap:20px;border-bottom:1px solid var(--border);z-index:99;';
+  });
+</script>
+
+</body>
+</html>
